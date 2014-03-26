@@ -32,76 +32,9 @@ BOOL APIENTRY DllMain( HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReser
 #define THIS_IS_THE_PLUGIN
 #include "agsplugin.h"
 
-const char *AGSTEAM_PLUGIN_NAME = "AGSteam";
-const char *AGSTEAM_SCRIPT_HEADER =
-	"#define AGSteam_VERSION 3.0\n"
-	"enum AGSteamStatType\n"
-	"  eAGSteamStatInt = 0,\n"
-	"  eAGSteamStatFloat = 1,\n"
-	"  eAGSteamStatAverageRate = 2\n"
-	"enum AGSteamScoresRequestType\n"
-	"  eAGSteamScoresRequestGlobal = 0,\n"
-	"  eAGSteamScoresRequestAroundUser = 1,\n"
-	"  eAGSteamScoresRequestFriends = 2\n"
-	"managed struct AGSteam\n"
-	"  ///AGSteam: Returns whether the specified Steam achievement has been achieved\n"
-	"  import static int IsAchievementAchieved(const string steamAchievementID);\n"
-	"  ///AGSteam: Sets a Steam achievement as achieved\n"
-	"  import static int SetAchievementAchieved(const string steamAchievementID);\n"
-	"  ///AGSteam: Resets the specified Steam achievement, so it can be achieved again\n"
-	"  import static int ResetAchievement(const string steamAchievementID);\n"
-	"  ///AGSteam: Sets the value of a Steam INT stat\n"
-	"  import static int SetIntStat(const string steamStatName, int value);\n"
-	"  ///AGSteam: Sets the value of a Steam FLOAT stat\n"
-	"  import static int SetFloatStat(const string steamStatName, float value);\n"
-	"  ///AGSteam: Updates a Steam AVGRATE stat\n"
-	"  import static int UpdateAverageRateStat(const string steamStatName, float numerator, float denominator);\n"
-	"  ///AGSteam: Returns the value of a Steam INT stat\n"
-	"  import static int GetIntStat(const string steamStatName);\n"
-	"  ///AGSteam: Returns the value of a Steam FLOAT stat\n"
-	"  import static float GetFloatStat(const string steamStatName);\n"
-	"  ///AGSteam: Returns the value of a Steam AVGRATE stat\n"
-	"  import static float GetAverageRateStat(const string steamStatName);\n"
-	"  ///AGSteam: Resets all Steam stats to their default values\n"
-	"  import static void ResetStats();\n"
-	"  ///AGSteam: Resets all Steam stats and achievements\n"
-	"  import static void ResetStatsAndAchievements();\n"
-	"  ///AGSteam: Returns whether the Steam client is loaded and the user logged in\n"
-	"  readonly import static attribute int Initialized;\n"
-	"  ///AGSteam: Returns the value of a global Steam INT stat\n"
-	"  import static int GetGlobalIntStat(const string steamStatName);\n"
-	"  ///AGSteam: Returns the value of a global Steam FLOAT stat\n"
-	"  import static float GetGlobalFloatStat(const string steamStatName);\n"
-	"  ///AGSteam: Returns the name of the current leaderboard (call FindLeadboard first)\n"
-	"  readonly import static attribute String CurrentLeaderboardName;\n"
-	"  ///AGSteam: Requests to load the specified Steam leaderboard. This call is asynchronous and does not return the data immediately, check for results in repeatedly_execute.\n"
-	"  import static void FindLeaderboard(const string leaderboardName);\n"
-	"  ///AGSteam: Uploads the score to the current Steam leaderboard. Returns false if an error occurred.\n"
-	"  import static int UploadScore(int score);\n"
-	"  ///AGSteam: Downloads a list of ten scores from the current Steam leaderboard.\n"
-	"  import static int DownloadScores(AGSteamScoresRequestType);\n"
-	"  ///AGSteam: Returns the name associated with a downloaded score. Call DownloadScores first.\n"
-	"  readonly import static attribute String LeaderboardNames[];\n"
-	"  ///AGSteam: Returns a downloaded score. Call DownloadScores first.\n"
-	"  readonly import static attribute int LeaderboardScores[];\n"
-	"  ///AGSteam: Returns the number of downloaded scores (if any). Call DownloadScores first. Max is 10 scores.\n"
-	"  readonly import static attribute int LeaderboardCount;\n"
-	"  ///AGSteam: Returns the current game language as registered by the Steam client.\n"
-	"  import static String GetCurrentGameLanguage();\n"
-	"  ///AGSteam: Returns the Steam user's username.\n"
-	"  import static String GetUserName();\n"
-;
-
-enum AGSteamStatType {
-	eAGSteamStatInt = 0,
-	eAGSteamStatFloat = 1,
-	eAGSteamStatAverageRate = 2
-};
-enum AGSteamScoresRequestType {
-	eAGSteamScoresRequestGlobal = 0,
-	eAGSteamScoresRequestAroundUser = 1,
-	eAGSteamScoresRequestFriends = 2
-};
+const char *AGSTEAM_PLUGIN_NAME = "AGSteamStub";
+// This is empty, we don't provide any editor support.
+const char *AGSTEAM_SCRIPT_HEADER = "";
 
 static IAGSEditor *AGSteam_editor;
 static IAGSEngine *AGSteam_engine;
@@ -242,9 +175,9 @@ static int AGSteam_UploadScore(int score) {
 	return ret;
 }
 
-static int AGSteam_DownloadScores(AGSteamScoresRequestType type) {
+static int AGSteam_DownloadScores(int type) {
 	int ret = 1;
-	printf("AGSteam: DownloadScores(%s): %d\n", type == eAGSteamScoresRequestGlobal ? "global" : type == eAGSteamScoresRequestAroundUser ? "around" : type == eAGSteamScoresRequestFriends ? "friends" : "unknown", ret);
+	printf("AGSteam: DownloadScores(%d): %d\n", type, ret);
 	return ret;
 }
 
@@ -259,7 +192,6 @@ static const char *AGSteam_GetUserName() {
 }
 
 static int AGSteam_Initialized(void *object) {
-	// Disable all Steam functionality for now to hide brokenness of this plugin
 	int ret = AGSteam_initialized;
 	printf("AGSteam: Initialized(%p): %d\n", object, ret);
 	return ret;

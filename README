@@ -21,11 +21,12 @@ had access to any material concerning the Steam API. This software was
 developed solely by extracting the string contents of AGSteam.dll.
 No code was analyzed or reverse engineered.
 
-To compile the plugin, a copy of agsplugin.h is needed.
-Please download the latest version from
+To compile the plugin, a copy of agsplugin.h is needed, along with
+a C++ compiler, GNU make and associated tools.
+Please download the latest version of agsplugin.h from
 https://github.com/adventuregamestudio/ags/blob/master/Engine/plugin/agsplugin.h
 and put it into the same directory as agsteam.cpp and Makefile.
-Then compile it by running GNU make, producing libagsteam.so.
+Then compile everything by running GNU make, producing libagsteam.so.
 No instructions for other platforms are provided, please figure them
 out yourself.
 
