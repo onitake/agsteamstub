@@ -25,6 +25,12 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD ulReason, LPVOID lpReserved) {
 #define THIS_IS_THE_PLUGIN
 #include "agsplugin.h"
 
+#ifdef DEBUG
+#define debug_printf(...) printf(__VA_ARGS__)
+#else
+#define debug_printf(...)
+#endif
+
 const char *AGSTEAM_PLUGIN_NAME = "AGSteamStub";
 // This is empty, we don't provide any editor support.
 const char *AGSTEAM_SCRIPT_HEADER = "";
@@ -56,72 +62,72 @@ static int AGSteam_New(IAGSEngine *engine) {
 		AGSteam_ratestats.clear();
 		AGSteam_initialized = true;
 	}
-	printf("AGSteam: New(%p): %d\n", engine, AGSteam_initialized);
+	debug_printf("AGSteam: New(%p): %d\n", engine, AGSteam_initialized);
 	return AGSteam_initialized ? 1 : 0;
 }
 
 static void AGSteam_Delete() {
-	printf("AGSteam: Delete()\n");
+	debug_printf("AGSteam: Delete()\n");
 	AGSteam_engine = 0;
 	AGSteam_initialized = false;
 }
 
 static int AGSteam_IsAchievementAchieved(const char *steamAchievementID) {
 	int ret = AGSteam_achievements[steamAchievementID] ? 1 : 0;
-	printf("AGSteam: IsAchievementAchieved(%s): %d\n", steamAchievementID, ret);
+	debug_printf("AGSteam: IsAchievementAchieved(%s): %d\n", steamAchievementID, ret);
 	return ret;
 }
 
 static int AGSteam_SetAchievementAchieved(const char *steamAchievementID) {
 	AGSteam_achievements[steamAchievementID] = true;
 	int ret = 1;
-	printf("AGSteam: SetAchievementAchieved(%s): %d\n", steamAchievementID, ret);
+	debug_printf("AGSteam: SetAchievementAchieved(%s): %d\n", steamAchievementID, ret);
 	return ret;
 }
 
 static int AGSteam_ResetAchievement(const char *steamAchievementID) {
 	AGSteam_achievements[steamAchievementID] = false;
 	int ret = 1;
-	printf("AGSteam: ResetAchievement(%s): %d\n", steamAchievementID, ret);
+	debug_printf("AGSteam: ResetAchievement(%s): %d\n", steamAchievementID, ret);
 	return ret;
 }
 
 static int AGSteam_SetIntStat(const char *steamStatName, int value) {
 	AGSteam_intstats[steamStatName] = value;
 	int ret = 1;
-	printf("AGSteam: SetIntStat(%s, %d): %d\n", steamStatName, value, ret);
+	debug_printf("AGSteam: SetIntStat(%s, %d): %d\n", steamStatName, value, ret);
 	return ret;
 }
 
 static int AGSteam_SetFloatStat(const char *steamStatName, float value) {
 	AGSteam_floatstats[steamStatName] = value;
 	int ret = 1;
-	printf("AGSteam: SetFloatStat(%s, %0.2f): %d\n", steamStatName, value, ret);
+	debug_printf("AGSteam: SetFloatStat(%s, %0.2f): %d\n", steamStatName, value, ret);
 	return ret;
 }
 
 static int AGSteam_UpdateAverageRateStat(const char *steamStatName, float numerator, float denominator) {
 	AGSteam_ratestats[steamStatName] = std::make_pair(numerator, denominator);
 	int ret = 1;
-	printf("AGSteam: UpdateAverageRateStat(%s, %0.2f/%0.2f): %d\n", steamStatName, numerator, denominator, ret);
+	debug_printf("AGSteam: UpdateAverageRateStat(%s, %0.2f/%0.2f): %d\n", steamStatName, numerator, denominator, ret);
 	return ret;
 }
 
 static int AGSteam_GetIntStat(const char *steamStatName) {
 	int ret = AGSteam_intstats[steamStatName];
-	printf("AGSteam: GetIntStat(%s): %d\n", steamStatName, ret);
+	debug_printf("AGSteam: GetIntStat(%s): %d\n", steamStatName, ret);
 	return ret;
 }
 
 static float AGSteam_GetFloatStat(const char *steamStatName) {
 	float ret = AGSteam_floatstats[steamStatName];
-	printf("AGSteam: GetFloatStat(%s): %0.2f\n", steamStatName, ret);
+	debug_printf("AGSteam: GetFloatStat(%s): %0.2f\n", steamStatName, ret);
 	return ret;
 }
 
 static float AGSteam_GetAverageRateStat(const char *steamStatName) {
 	float ret = AGSteam_ratestats[steamStatName].first / AGSteam_ratestats[steamStatName].second;
-	printf("AGSteam: GetAverageRateStat(%s): %0.2f\n", steamStatName, ret);
+	debug_printf("AGSteam: GetAverageRateStat(%s): %0.2f\n", steamStatName, ret);
 	return ret;
 }
 
@@ -129,7 +135,7 @@ static void AGSteam_ResetStats() {
 	AGSteam_intstats.clear();
 	AGSteam_floatstats.clear();
 	AGSteam_ratestats.clear();
-	printf("AGSteam: ResetStats()\n");
+	debug_printf("AGSteam: ResetStats()\n");
 }
 
 static void AGSteam_ResetStatsAndAchievements() {
@@ -137,18 +143,18 @@ static void AGSteam_ResetStatsAndAchievements() {
 	AGSteam_floatstats.clear();
 	AGSteam_ratestats.clear();
 	AGSteam_achievements.clear();
-	printf("AGSteam: ResetStatsAndAchievements()\n");
+	debug_printf("AGSteam: ResetStatsAndAchievements()\n");
 }
 
 static int AGSteam_GetGlobalIntStat(const char *steamStatName) {
 	int ret = 0;
-	printf("AGSteam: GetGlobalIntStat(%s): %d\n", steamStatName, ret);
+	debug_printf("AGSteam: GetGlobalIntStat(%s): %d\n", steamStatName, ret);
 	return ret;
 }
 
 static float AGSteam_GetGlobalFloatStat(const char *steamStatName) {
 	float ret = 0.0f;
-	printf("AGSteam: GetGlobalFloatStat(%s): %0.2f\n", steamStatName, ret);
+	debug_printf("AGSteam: GetGlobalFloatStat(%s): %0.2f\n", steamStatName, ret);
 	return ret;
 }
 
@@ -158,40 +164,40 @@ static void AGSteam_FindLeaderboard(const char *leaderboardName) {
 		AGSteam_lbnames.push_back(AGSteam_curlbname);
 		AGSteam_lbscores[AGSteam_curlbname] = 0;
 	}
-	printf("AGSteam: FindLeaderboard(%s)\n", AGSteam_curlbname.c_str());
+	debug_printf("AGSteam: FindLeaderboard(%s)\n", AGSteam_curlbname.c_str());
 }
 
 static int AGSteam_UploadScore(int score) {
 	AGSteam_lbscores[AGSteam_curlbname] = score;
 	int ret = 1;
-	printf("AGSteam: UploadScore(%d): %d\n", score, ret);
+	debug_printf("AGSteam: UploadScore(%d): %d\n", score, ret);
 	return ret;
 }
 
 static int AGSteam_DownloadScores(int type) {
 	int ret = 1;
-	printf("AGSteam: DownloadScores(%d): %d\n", type, ret);
+	debug_printf("AGSteam: DownloadScores(%d): %d\n", type, ret);
 	return ret;
 }
 
 static const char *AGSteam_GetCurrentGameLanguage() {
-	printf("AGSteam: GetCurrentGameLanguage(): %s\n", AGSteam_language.c_str());
+	debug_printf("AGSteam: GetCurrentGameLanguage(): %s\n", AGSteam_language.c_str());
 	return AGSteam_engine->CreateScriptString(AGSteam_language.c_str());
 }
 
 static const char *AGSteam_GetUserName() {
-	printf("AGSteam: GetUserName(): %s\n", AGSteam_username.c_str());
+	debug_printf("AGSteam: GetUserName(): %s\n", AGSteam_username.c_str());
 	return AGSteam_engine->CreateScriptString(AGSteam_username.c_str());
 }
 
 static int AGSteam_Initialized(void *object) {
 	int ret = AGSteam_initialized;
-	printf("AGSteam: Initialized(%p): %d\n", object, ret);
+	debug_printf("AGSteam: Initialized(%p): %d\n", object, ret);
 	return ret;
 }
 
 static const char *AGSteam_CurrentLeaderboardName(void *object) {
-	printf("AGSteam: CurrentLeaderboardName(%p): %s\n", object, AGSteam_curlbname.c_str());
+	debug_printf("AGSteam: CurrentLeaderboardName(%p): %s\n", object, AGSteam_curlbname.c_str());
 	return AGSteam_engine->CreateScriptString(AGSteam_curlbname.c_str());
 }
 
@@ -200,7 +206,7 @@ static const char *AGSteam_LeaderboardNames(void *object, int index) {
 	if (static_cast<unsigned int>(index) < AGSteam_lbnames.size()) {
 		ret = AGSteam_lbnames[index];
 	}
-	printf("AGSteam: LeaderboardNames(%p, %d): %s\n", object, index, ret.c_str());
+	debug_printf("AGSteam: LeaderboardNames(%p, %d): %s\n", object, index, ret.c_str());
 	return AGSteam_engine->CreateScriptString(ret.c_str());
 }
 
@@ -209,17 +215,17 @@ static int AGSteam_LeaderboardScores(void *object, int index) {
 	if (static_cast<unsigned int>(index) < AGSteam_lbnames.size()) {
 		ret = AGSteam_lbscores[AGSteam_lbnames[index]];
 	}
-	printf("AGSteam: LeaderboardScores(%p, %d): %d\n", object, index, ret);
+	debug_printf("AGSteam: LeaderboardScores(%p, %d): %d\n", object, index, ret);
 	return ret;
 }
 
 static int AGSteam_LeaderboardCount(void *object) {
-	printf("AGSteam: LeaderboardCount(%p): %lu\n", object, AGSteam_lbnames.size());
+	debug_printf("AGSteam: LeaderboardCount(%p): %lu\n", object, AGSteam_lbnames.size());
 	return AGSteam_lbnames.size();
 }
 
 const char *AGS_GetPluginName() {
-	printf("AGSteam: AGS_GetPluginName()\n");
+	debug_printf("AGSteam: AGS_GetPluginName()\n");
 	return AGSTEAM_PLUGIN_NAME;
 }
 
@@ -229,33 +235,33 @@ int AGS_EditorStartup(IAGSEditor *lpEditor) {
 		AGSteam_editor = lpEditor;
 		AGSteam_editor->RegisterScriptHeader(AGSTEAM_SCRIPT_HEADER);
 	}
-	printf("AGSteam: AGS_EditorStartup(%p): %d", lpEditor, ret);
+	debug_printf("AGSteam: AGS_EditorStartup(%p): %d", lpEditor, ret);
 	return ret;
 }
 
 void AGS_EditorShutdown() {
-	printf("AGSteam: AGS_EditorShutdown()\n");
+	debug_printf("AGSteam: AGS_EditorShutdown()\n");
 	AGSteam_editor->UnregisterScriptHeader(AGSTEAM_SCRIPT_HEADER);
 	AGSteam_editor = 0;
 }
 
 void AGS_EditorProperties(HWND parent) {
-	printf("AGSteam: AGS_EditorProperties(%d)\n", parent);
+	debug_printf("AGSteam: AGS_EditorProperties(%d)\n", parent);
 	printf("AGSteam stub plugin for use without Steam - Public domain\n");
 }
 
 int AGS_EditorSaveGame(char *buffer, int bufsize) {
 	int ret = 0;
-	printf("AGSteam: AGS_EditorSaveGame(%p, %d): %d\n", buffer, bufsize, ret);
+	debug_printf("AGSteam: AGS_EditorSaveGame(%p, %d): %d\n", buffer, bufsize, ret);
 	return ret;
 }
 
 void AGS_EditorLoadGame(char *buffer, int bufsize) {
-	printf("AGSteam: AGS_EditorLoadGame(%p, %d)\n", buffer, bufsize);
+	debug_printf("AGSteam: AGS_EditorLoadGame(%p, %d)\n", buffer, bufsize);
 }
 
 void AGS_EngineStartup(IAGSEngine *lpGame) {
-	printf("AGSteam: AGS_EngineStartup(%p)\n", lpGame);
+	debug_printf("AGSteam: AGS_EngineStartup(%p)\n", lpGame);
 	AGSteam_New(lpGame);
 	lpGame->RegisterScriptFunction("AGSteam::IsAchievementAchieved^1", reinterpret_cast<void *>(AGSteam_IsAchievementAchieved));
 	lpGame->RegisterScriptFunction("AGSteam::SetAchievementAchieved^1", reinterpret_cast<void *>(AGSteam_SetAchievementAchieved));
@@ -283,13 +289,13 @@ void AGS_EngineStartup(IAGSEngine *lpGame) {
 }
 
 void AGS_EngineShutdown() {
-	printf("AGSteam: AGS_EngineShutdown()\n");
+	debug_printf("AGSteam: AGS_EngineShutdown()\n");
 	AGSteam_Delete();
 	return;
 }
 
 int AGS_EngineOnEvent(int event, int data) {
 	int ret = 0;
-	printf("AGSteam: AGS_EngineOnEvent(%d, %d): %d\n", event, data, ret);
+	debug_printf("AGSteam: AGS_EngineOnEvent(%d, %d): %d\n", event, data, ret);
 	return ret;
 }
