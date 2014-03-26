@@ -1,0 +1,55 @@
+AGS Steam stub plugin
+
+This is a replacement for the AGSteam plugin by monkey_05_06 that can
+be found here:
+http://www.adventuregamestudio.co.uk/forums/index.php?topic=44712.0
+
+It replicates its functionality and provides basic in-memory storage
+of state, so games that require this plugin should run without the
+Steam client.
+
+Note that this plugin was written exclusively to allow playing
+Heroine's Quest on Linux, for which no official release is available
+at the time of writing.
+Heroine's Quest is a game that can be downloaded freely from Steam:
+http://store.steampowered.com/app/283880
+
+The author does not condone piracy.
+
+The author has not signed an NDA with Valve Software, Inc. and has not
+had access to any material concerning the Steam API. This software was
+developed solely by extracting the string contents of AGSteam.dll.
+No code was analyzed or reverse engineered.
+
+To compile the plugin, a copy of agsplugin.h is needed.
+Please download the latest version from
+https://github.com/adventuregamestudio/ags/blob/master/Engine/plugin/agsplugin.h
+and put it into the same directory as agsteam.cpp and Makefile.
+Then compile it by running GNU make, producing libagsteam.so.
+No instructions for other platforms are provided, please figure them
+out yourself.
+
+This is free and unencumbered software released into the public domain.
+
+Anyone is free to copy, modify, publish, use, compile, sell, or
+distribute this software, either in source code form or as a compiled
+binary, for any purpose, commercial or non-commercial, and by any
+means.
+
+In jurisdictions that recognize copyright laws, the author or authors
+of this software dedicate any and all copyright interest in the
+software to the public domain. We make this dedication for the benefit
+of the public at large and to the detriment of our heirs and
+successors. We intend this dedication to be an overt act of
+relinquishment in perpetuity of all present and future rights to this
+software under copyright law.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+IN NO EVENT SHALL THE AUTHORS BE LIABLE FOR ANY CLAIM, DAMAGES OR
+OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+For more information, please refer to <http://unlicense.org/>

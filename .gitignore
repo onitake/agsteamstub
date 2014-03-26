@@ -1,0 +1,4 @@
+agsplugin.h
+*.o
+*.so
+test
