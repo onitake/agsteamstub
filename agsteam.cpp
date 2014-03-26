@@ -10,14 +10,7 @@
 // Do any Windows specific constructor/destructor work here.
 // Do NOT use for plugin initialization code.
 // DllMain will never be called on non-Windows platforms.
-BOOL APIENTRY DllMain( HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved) {
-	switch (ul_reason_for_call)	{
-		case DLL_PROCESS_ATTACH:
-		case DLL_THREAD_ATTACH:
-		case DLL_THREAD_DETACH:
-		case DLL_PROCESS_DETACH:
-			break;
-	}
+BOOL APIENTRY DllMain(HANDLE hModule, DWORD ulReason, LPVOID lpReserved) {
 	return TRUE;
 }
 
