@@ -32,10 +32,7 @@ BOOL APIENTRY DllMain(HANDLE hModule, DWORD ulReason, LPVOID lpReserved) {
 #endif
 
 const char *AGSTEAM_PLUGIN_NAME = "AGSteamStub";
-// This is empty, we don't provide any editor support.
-const char *AGSTEAM_SCRIPT_HEADER = "";
 
-static IAGSEditor *AGSteam_editor;
 static IAGSEngine *AGSteam_engine;
 static std::string AGSteam_language;
 static std::string AGSteam_username;
@@ -227,37 +224,6 @@ static int AGSteam_LeaderboardCount(void *object) {
 const char *AGS_GetPluginName() {
 	debug_printf("AGSteam: AGS_GetPluginName()\n");
 	return AGSTEAM_PLUGIN_NAME;
-}
-
-int AGS_EditorStartup(IAGSEditor *lpEditor) {
-	int ret = -1;
-	if (lpEditor->version >= 1) {
-		AGSteam_editor = lpEditor;
-		AGSteam_editor->RegisterScriptHeader(AGSTEAM_SCRIPT_HEADER);
-	}
-	debug_printf("AGSteam: AGS_EditorStartup(%p): %d", lpEditor, ret);
-	return ret;
-}
-
-void AGS_EditorShutdown() {
-	debug_printf("AGSteam: AGS_EditorShutdown()\n");
-	AGSteam_editor->UnregisterScriptHeader(AGSTEAM_SCRIPT_HEADER);
-	AGSteam_editor = 0;
-}
-
-void AGS_EditorProperties(HWND parent) {
-	debug_printf("AGSteam: AGS_EditorProperties(%d)\n", parent);
-	printf("AGSteam stub plugin for use without Steam - Public domain\n");
-}
-
-int AGS_EditorSaveGame(char *buffer, int bufsize) {
-	int ret = 0;
-	debug_printf("AGSteam: AGS_EditorSaveGame(%p, %d): %d\n", buffer, bufsize, ret);
-	return ret;
-}
-
-void AGS_EditorLoadGame(char *buffer, int bufsize) {
-	debug_printf("AGSteam: AGS_EditorLoadGame(%p, %d)\n", buffer, bufsize);
 }
 
 void AGS_EngineStartup(IAGSEngine *lpGame) {
