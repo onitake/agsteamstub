@@ -1,7 +1,7 @@
 AGS Steam stub plugin
 
-This is a replacement for the AGSteam plugin by monkey_05_06 that can be found here:
-http://www.adventuregamestudio.co.uk/forums/index.php?topic=44712.0
+This is a replacement for the AGSteam plugin by monkey_05_06 that can be found
+here: http://www.adventuregamestudio.co.uk/forums/index.php?topic=44712.0
 
 It replicates its functionality and provides basic in-memory storage of state,
 so games that require this plugin should run without the Steam client.
@@ -21,18 +21,18 @@ haven't paid for! Every developer has invested countless hours into providing
 you with entertainment, you should acknowledge that and support them by buying
 their games legally.
 
-The author has not signed an NDA with Valve Software, Inc. and has not had access
-to any material concerning the Steam API. This software was originally developed
-by extracting the string contents of AGSteam.dll, but all the required information
-can also be obtained from the aforementioned thread on adventuregamestudio.co.uk.
-No machine code was analyzed or reverse engineered.
+The author has not signed an NDA with Valve Software, Inc. and has not had
+access to any material concerning the Steam API. This software was originally
+developed by extracting the string contents of AGSteam.dll, but all the
+required information can also be obtained from the aforementioned thread on
+adventuregamestudio.co.uk. No machine code was analyzed or reverse engineered.
 
-To compile the plugin, a copy of agsplugin.h is needed, along with a C++ compiler,
-(GNU) make and associated tools. Please download the latest version of agsplugin.h
-from github and copy it into the same directory as agsteam.cpp and Makefile.
-Then run make, which should produce libagsteam.so. This is the plugin. If you copy
-it into a game folder, ags should find and load it automatically, just like it
-would AGSteam.dll on Windows.
+To compile the plugin, a copy of agsplugin.h is needed, along with a C++
+compiler, (GNU) make and associated tools. Please download the latest version
+of agsplugin.h from github and copy it into the same directory as agsteam.cpp
+and Makefile. Then run make, which should produce libagsteam.so. This is the
+plugin. If you copy it into a game folder, ags should find and load it
+automatically, just like it would do with AGSteam.dll on Windows.
 
 Specific instructions for Debian and Ubuntu (untested):
 $ sudo apt-get install g++ libc6-dev git make wget
