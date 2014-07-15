@@ -2,6 +2,7 @@ CXX = g++
 CXXFLAGS = -g -O2 -Wall -fPIC
 LD = g++
 LDFLAGS =
+DEFINES = -DNDEBUG
 
 all: libagsteam.so
 
@@ -18,4 +19,4 @@ libagsteam.so: agsteam.o
 	$(LD) $(LDFLAGS) -shared -o $@ $^
 
 %.o: %.cpp
-	$(CXX) $(CXXFLAGS) -o $@ -c $^
+	$(CXX) $(CXXFLAGS) $(DEFINES) -o $@ -c $^
